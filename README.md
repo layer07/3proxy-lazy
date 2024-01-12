@@ -9,7 +9,7 @@
  1. Download the installation script:
 
     ```
-    wget https://github.com/layer07/3proxy-lazy/releases/download/Release/3proxy_install.sh
+    wget https://raw.githubusercontent.com/layer07/3proxy-lazy/main/3proxy-install.sh
     ```
 
  2. Make the script executable:
