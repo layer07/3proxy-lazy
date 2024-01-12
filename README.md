@@ -1,109 +1,41 @@
-#!/bin/bash
+ 3Proxy Installation Script
 
-clear  # Clear the screen
+ This script automates the installation of 3proxy on your system. 3proxy is a lightweight and versatile proxy server that can be used for various purposes.
 
-# Header
-echo -e "
-  ██████▓██   ██▓  ██████  ██▓███   █    ██  ███▄    █  ██ ▄█▀
-▒██    ▒ ▒██  ██▒▒██    ▒ ▓██░  ██▒ ██  ▓██▒ ██ ▀█   █  ██▄█▒ 
-░ ▓██▄    ▒██ ██░░ ▓██▄   ▓██░ ██▓▒▓██  ▒██░▓██  ▀█ ██▒▓███▄░ 
-  ▒   ██▒ ░ ▐██▓░  ▒   ██▒▒██▄█▓▒ ▒▓▓█  ░██░▓██▒  ▐▌██▒▓██ █▄ 
-▒██████▒▒ ░ ██▒▓░▒██████▒▒▒██▒ ░  ░▒▒█████▓ ▒██░   ▓██░▒██▒ █▄
-▒ ▒▓▒ ▒ ░  ██▒▒▒ ▒ ▒▓▒ ▒ ░▒▓▒░ ░  ░░▒▓▒ ▒ ▒ ░ ▒░   ▒ ▒ ▒ ▒▒ ▓▒
-░ ░▒  ░ ░▓██ ░▒░ ░ ░▒  ░ ░░▒ ░     ░░▒░ ░ ░ ░ ░░   ░ ▒░░ ░▒ ▒░
-░  ░  ░  ▒ ▒ ░░  ░  ░  ░  ░░        ░░░ ░ ░    ░   ░ ░ ░ ░░ ░ 
-      ░  ░ ░           ░              ░              ░ ░  ░   
-         ░ ░                                                  
-"
+ Installation
 
-function install_3proxy() {
-    # Download 3proxy and install it
-    passwd_file="/etc/3proxy/conf/passwd"
-    wget https://github.com/3proxy/3proxy/releases/download/0.9.4/3proxy-0.9.4.x86_64.deb
-    sudo dpkg -i 3proxy-0.9.4.x86_64.deb
+ To install 3proxy using this script, follow these steps:
 
-    # Set the desired port (60000) in the 3proxy configuration file
-    sudo sed -i 's/^nscache .*/nscache 65536/' /etc/3proxy/3proxy.cfg
+ 1. Download the installation script:
 
-    # Ask for username and password
-    read -p "Enter username for 3proxy: " username
-    read -p "Enter password for 3proxy: " password
+    ```
+    wget https://github.com/layer07/3proxy-lazy/releases/download/Release/3proxy_install.sh
+    ```
 
-    # Create a user file with username and password
-    echo "${username}:${password}" | sudo tee -a /etc/3proxy/.proxyauth
-    echo "$username:CL:$password" | sudo tee -a "$passwd_file"
+ 2. Make the script executable:
 
-    # Restart 3proxy to apply changes
-    sudo systemctl restart 3proxy
-}
+    ```
+    chmod +x 3proxy_install.sh
+    ```
 
-function add_new_user() {
-    # Prompt for the username
-    read -p "Enter the username: " username
+ 3. Execute the script:
 
-    # Prompt for the password (plaintext)
-    read -p "Enter the password: " password
+    ```
+    ./3proxy_install.sh
+    ```
 
-    # Path to the 3proxy configuration file
-    config_file="/etc/3proxy/3proxy.cfg"
+ Usage
 
-    # Path to the 3proxy password file
-    passwd_file="/etc/3proxy/conf/passwd"
+ Upon executing the script, you will be presented with a menu that allows you to perform the following actions:
 
-    # Add the user to the 3proxy configuration file
-    echo "users $username:CL:$password" | sudo tee -a "$config_file"
+ 1. **Install From Scratch**: This option installs 3proxy from scratch, configuring it with a default user. If 3proxy is already installed, the installation will be aborted.
 
-    # Add the user to the 3proxy password file
-    echo "$username:CL:$password" | sudo tee -a "$passwd_file"
+ 2. **Add New User**: Use this option to add a new user to an existing 3proxy installation. You will be prompted to enter the username and password for the new user.
 
-    # Reload 3proxy to apply the changes
-    sudo systemctl reload 3proxy
+ 3. **Complete Uninstall**: This option completely uninstalls 3proxy from your system. All configuration files and logs will be removed.
 
-    echo "User $username added successfully."
-    sudo systemctl restart 3proxy
-}
+ 4. **Exit**: Select this option to exit the script.
 
-function remove_3proxy() {
-    # Stop 3proxy service if running
-    sudo systemctl stop 3proxy
+ Follow the on-screen prompts to complete the desired action. 
 
-    # Remove 3proxy and its configuration files
-    sudo apt-get purge 3proxy -y
-    sudo rm -rf /etc/3proxy/
-}
-
-function change_socks_port() {
-    # Prompt for the new SOCKS5 listening port
-    read -p "Enter the new SOCKS5 listening port: " socks_port
-
-    # Path to the 3proxy configuration file
-    config_file="/etc/3proxy/conf/3proxy.cfg"
-
-    # Change the SOCKS5 listening port in the 3proxy configuration file
-    sudo sed -i "s/^socks -p[0-9]*/socks -p${socks_port}/" "$config_file"
-
-    # Restart 3proxy to apply the changes
-    sudo systemctl restart 3proxy
-
-    echo "SOCKS5 listening port changed to $socks_port."
-}
-
-while true; do
-    echo "Select an option:"
-    echo "1) Install 3proxy"
-    echo "2) Add New User"
-    echo "3) Completely Remove 3proxy"
-    echo "4) Change SOCKS5 Listening Port"
-    echo "5) Exit"
-
-    read -p "Enter your choice: " choice
-
-    case $choice in
-        1) install_3proxy ;;
-        2) add_new_user ;;
-        3) remove_3proxy ;;
-        4) change_socks_port ;;
-        5) exit ;;
-        *) echo "Invalid choice. Please select a valid option." ;;
-    esac
-done
+ **Disclaimer:** This script is provided as-is and is not associated with the official 3proxy project. Use it at your own risk.
