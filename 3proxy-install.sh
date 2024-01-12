@@ -18,6 +18,7 @@ echo -e "
 
 function install_3proxy() {
     # Download 3proxy and install it
+	passwd_file="/etc/3proxy/conf/passwd"
     wget https://github.com/3proxy/3proxy/releases/download/0.9.4/3proxy-0.9.4.x86_64.deb
     sudo dpkg -i 3proxy-0.9.4.x86_64.deb
 
@@ -30,6 +31,7 @@ function install_3proxy() {
 
     # Create a user file with username and password
     echo "${username}:${password}" | sudo tee -a /etc/3proxy/.proxyauth
+	echo "$username:CL:$password" | sudo tee -a "$passwd_file"
 
     # Restart 3proxy to apply changes
     sudo systemctl restart 3proxy
