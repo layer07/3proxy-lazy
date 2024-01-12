@@ -1,8 +1,8 @@
- 3Proxy Installation Script
+ ## 3Proxy Installation Script
 
  This script automates the installation of 3proxy on your system. 3proxy is a lightweight and versatile proxy server that can be used for various purposes.
 
- Installation
+ ## Installation
 
  To install 3proxy using this script, follow these steps:
 
@@ -23,6 +23,15 @@
     ```
     ./3proxy_install.sh
     ```
+
+
+## All in one for the ultra-lazy (concatenate all lines in a single command)
+```bash
+wget https://github.com/layer07/3proxy-lazy/releases/download/Release/3proxy_install.sh \
+&& chmod +x 3proxy_install.sh \
+&& ./3proxy_install.sh
+```
+    
 
  Usage
 
