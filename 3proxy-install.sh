@@ -80,7 +80,7 @@ function change_socks_port() {
     config_file="/etc/3proxy/conf/3proxy.cfg"
 
     # Change the SOCKS5 listening port in the 3proxy configuration file
-    sudo sed -i "s/^socks -p[0-9]*/socks -p${socks_port}/" "$config_file"
+    sudo sed -i "s/^socks$/socks -p${socks_port}/" "$config_file"
 
     # Restart 3proxy to apply the changes
     sudo systemctl restart 3proxy
