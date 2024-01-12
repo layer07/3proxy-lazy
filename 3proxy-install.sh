@@ -18,7 +18,7 @@ echo -e "
 
 function install_3proxy() {
     # Download 3proxy and install it
-	passwd_file="/etc/3proxy/conf/passwd"
+    passwd_file="/etc/3proxy/conf/passwd"
     wget https://github.com/3proxy/3proxy/releases/download/0.9.4/3proxy-0.9.4.x86_64.deb
     sudo dpkg -i 3proxy-0.9.4.x86_64.deb
 
@@ -31,7 +31,7 @@ function install_3proxy() {
 
     # Create a user file with username and password
     echo "${username}:${password}" | sudo tee -a /etc/3proxy/.proxyauth
-	echo "$username:CL:$password" | sudo tee -a "$passwd_file"
+    echo "$username:CL:$password" | sudo tee -a "$passwd_file"
 
     # Restart 3proxy to apply changes
     sudo systemctl restart 3proxy
@@ -72,12 +72,29 @@ function remove_3proxy() {
     sudo rm -rf /etc/3proxy/
 }
 
+function change_socks_port() {
+    # Prompt for the new SOCKS5 listening port
+    read -p "Enter the new SOCKS5 listening port: " socks_port
+
+    # Path to the 3proxy configuration file
+    config_file="/etc/3proxy/conf/3proxy.cfg"
+
+    # Change the SOCKS5 listening port in the 3proxy configuration file
+    sudo sed -i "s/^socks -p[0-9]*/socks -p${socks_port}/" "$config_file"
+
+    # Restart 3proxy to apply the changes
+    sudo systemctl restart 3proxy
+
+    echo "SOCKS5 listening port changed to $socks_port."
+}
+
 while true; do
     echo "Select an option:"
     echo "1) Install 3proxy"
     echo "2) Add New User"
     echo "3) Completely Remove 3proxy"
-    echo "4) Exit"
+    echo "4) Change SOCKS5 Listening Port"
+    echo "5) Exit"
 
     read -p "Enter your choice: " choice
 
@@ -85,7 +102,8 @@ while true; do
         1) install_3proxy ;;
         2) add_new_user ;;
         3) remove_3proxy ;;
-        4) exit ;;
+        4) change_socks_port ;;
+        5) exit ;;
         *) echo "Invalid choice. Please select a valid option." ;;
     esac
 done
