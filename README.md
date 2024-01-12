@@ -9,7 +9,7 @@
  1. Download the installation script:
 
     ```
-    wget https://github.com/layer07/3proxy-lazy/releases/download/Release/3proxy_install.sh
+    curl -o 3proxy-install.sh -L https://raw.githubusercontent.com/layer07/3proxy-lazy/main/3proxy-install.sh
     ```
 
  2. Make the script executable:
@@ -27,9 +27,9 @@
 
 ## All in one for the ultra-lazy
 ```bash
-wget https://github.com/layer07/3proxy-lazy/releases/download/Release/3proxy_install.sh \
-&& chmod +x 3proxy_install.sh \
-&& ./3proxy_install.sh
+curl -o 3proxy-install.sh -L https://raw.githubusercontent.com/layer07/3proxy-lazy/main/3proxy-install.sh
+chmod +x 3proxy-install.sh
+./3proxy-install.sh
 ```
 ## Default Socks5 Server Port
 The default port is **`TCP: 60000`**, change the script before executing if you need a different port. 
