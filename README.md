@@ -25,7 +25,7 @@
     ```
 
 
-## All in one for the ultra-lazy (concatenate all lines in a single command)
+## All in one for the ultra-lazy
 ```bash
 wget https://github.com/layer07/3proxy-lazy/releases/download/Release/3proxy_install.sh \
 && chmod +x 3proxy_install.sh \
