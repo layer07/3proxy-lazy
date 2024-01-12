@@ -31,7 +31,8 @@ wget https://github.com/layer07/3proxy-lazy/releases/download/Release/3proxy_ins
 && chmod +x 3proxy_install.sh \
 && ./3proxy_install.sh
 ```
-    
+## Default Socks5 Server Port
+The default port is **`TCP: 60000`**, change the script before executing if you need a different port. 
 
  Usage
 
