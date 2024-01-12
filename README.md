@@ -15,13 +15,13 @@
  2. Make the script executable:
 
     ```
-    chmod +x 3proxy_install.sh
+    chmod +x 3proxy-install.sh
     ```
 
  3. Execute the script:
 
     ```
-    ./3proxy_install.sh
+    ./3proxy-install.sh
     ```
 
 ## One Liner if you are ultra-lazy or in a hurry
